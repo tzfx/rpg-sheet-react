@@ -18,7 +18,7 @@ export class AbilityScore {
     private static BASE_SCORE = 10;
     public static LOWEST_SCORE = 1;
     public static HIGHEST_SCORE = 30;
-    
+
     private _score: number;
 
     constructor(score?: number) {
@@ -33,7 +33,7 @@ export class AbilityScore {
             value: 0,
         };
         let i = 0;
-        rolls.forEach(roll => {
+        rolls.forEach((roll) => {
             i++;
             if (roll < lowest.value) {
                 lowest.index = i;
@@ -55,10 +55,8 @@ export class AbilityScore {
     get modifier(): number {
         const norm = this.score % 2 ? this.score : this.score - 1;
         const step = norm - AbilityScore.BASE_SCORE;
-        if (step === 0)
-            return step;
-        else
-            return Math.floor(step - ((step < 0 ? -1 : 1) * step) / 2);
+        if (step === 0) return step;
+        else return Math.floor(step - ((step < 0 ? -1 : 1) * step) / 2);
     }
 
     get score(): number {
