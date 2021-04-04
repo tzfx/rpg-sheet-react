@@ -5,6 +5,7 @@ import { get } from '../../util/get';
 
 type Props = {
     characters: Character[];
+    select$: (character: Character) => void;
 };
 
 export class CharacterList extends React.Component<Props, {}> {
@@ -29,7 +30,7 @@ export class CharacterList extends React.Component<Props, {}> {
                         <Table.Cell key={key}>{get(character, key)}</Table.Cell>
                     ))}
                     <Table.Cell key={'options'}>
-                        <Button icon="play"></Button>
+                        <Button icon="play" onClick={() => this.props.select$(character)}></Button>
                         <Button icon="trash" color="red"></Button>
                     </Table.Cell>
                 </Table.Row>

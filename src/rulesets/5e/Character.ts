@@ -11,26 +11,46 @@ export type Proficiencies = {
     skills: Set<any>;
 };
 
-export class Character {
+export type CharacterType = {
+    id: string;
+    bio: CharacterBio;
+    inspiration: boolean;
+    level: number;
+    abilities: Abilities;
+    languages: string[];
+    inventory: any[];
+    proficiencies: Proficiencies;
+    equipment: {
+        melee: Weapon[];
+        ranged: RangedWeapon[];
+        armor?: Armor;
+        shield?: Armor;
+    };
+    currency: {
+        pp: number;
+        gp: number;
+        sp: number;
+        cp: number;
+    };
+    currentHp: number;
+    maxHp: number;
+    ac: number;
+    temporaryHp: number;
+    proficiency: number;
+}
+
+export class Character implements CharacterType {
     id: string = uuid58();
     rng = new Random();
 
-    inspiration: boolean = false;
-
-    bio: CharacterBio;
+    inspiration = false;
 
     BASE_AC = 10;
     level: number;
 
-    abilities: Abilities;
-    languages: string[] = [];
-    inventory?: any[];
-    combat?: {
-        armor?: Armor;
-        ranged?: RangedWeapon;
-        melee?: Weapon;
-        shield?: Armor;
-    };
+    languages = [];
+    inventory = [];
+
     currency = {
         pp: 0,
         gp: 0,
@@ -44,12 +64,11 @@ export class Character {
     xp: number;
     proficiency: number;
 
-    constructor(bio: CharacterBio, abilities: Abilities, public proficiencies: Proficiencies) {
-        this.bio = bio;
+    constructor(character: CharacterType) {
         this.level = 0;
         this.xp = 0;
         this.inspiration = false;
-        this.abilities = abilities;
+        this.abilities = character.abilities;
         this.proficiency = 2;
     }
 
