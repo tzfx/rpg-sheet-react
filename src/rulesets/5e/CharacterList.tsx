@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Table } from "semantic-ui-react";
 import { Character } from "./Character";
-import { get } from "../../util/Get";
+import { get } from "../../util/get";
 
 type Props = {
     characters: Character[];
