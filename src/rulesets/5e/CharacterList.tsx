@@ -1,23 +1,13 @@
 import React from "react";
 import { Button, Table } from "semantic-ui-react";
 import { Character } from "./Character";
+import { get } from "../../util/Get";
 
 type Props = {
     characters: Character[];
 }
 
 export class CharacterList extends React.Component<Props, {}> {
-
-    // Native implementation for lodash get.
-    private get = (obj: Object, path: string, defaultValue = undefined) => {
-        const travel = (regexp: any) =>
-            String.prototype.split
-                .call(path, regexp)
-                .filter(Boolean)
-                .reduce((res, key) => (res !== null && res !== undefined ? (res as any)[key] : res), obj);
-        const result = travel(/[,[\]]+?/) || travel(/[,[\].]+?/);
-        return result === undefined || result === obj ? defaultValue : result;
-    };
 
     headers = {
         'bio.name': 'Name',
@@ -42,7 +32,7 @@ export class CharacterList extends React.Component<Props, {}> {
                 <Table.Row key={character.id}>
                     { Object.keys(this.headers).map(key => (
                         <Table.Cell key={key}>
-                            {this.get(character, key)}
+                            {get(character, key)}
                         </Table.Cell>
                     ))}
                     <Table.Cell key={'options'}>
