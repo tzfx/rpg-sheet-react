@@ -39,27 +39,27 @@ export class SheetSkills extends React.Component<Props, State> {
         if (query != '')
             this.setState({
                 throws: new Set(
-                    (
-                        (Object.entries(this.props.character.abilities) as unknown) as [
-                            AbilityType,
-                            Ability
-                        ][]
-                    )
+                    ((Object.entries(this.props.character.abilities) as unknown) as [
+                        AbilityType,
+                        Ability
+                    ][])
                         .filter((t) => t[1].name.toLowerCase().startsWith(query.toLowerCase()))
                         .map((t) => t[0])
                 ),
                 skills: new Set(
-                    Array.from(this.props.character.proficiencies.skills).concat(Skills).filter((a) => a.name.toLowerCase().startsWith(query.toLowerCase()))
+                    Array.from(this.props.character.proficiencies.skills)
+                        .concat(Skills)
+                        .filter((a) => a.name.toLowerCase().startsWith(query.toLowerCase()))
                 ),
             });
         else if (this.props.character.bio != null)
-            this.setState(
-                {
-                    throws: new Set(Object.keys(this.props.character.abilities) as AbilityType[]),
-                    skills: new Set(Array.from(this.props.character.proficiencies.skills).concat(Skills)),
-                }
-            );
-    }
+            this.setState({
+                throws: new Set(Object.keys(this.props.character.abilities) as AbilityType[]),
+                skills: new Set(
+                    Array.from(this.props.character.proficiencies.skills).concat(Skills)
+                ),
+            });
+    };
 
     render() {
         return (
@@ -71,12 +71,11 @@ export class SheetSkills extends React.Component<Props, State> {
                 </Input>
                 <h3>Saving Throws</h3>
                 <List ordered={false}>
-                    {
-                        (Object.entries(this.props.character.abilities) as unknown as [
-                            AbilityType,
-                            Ability
-                        ][])
-                        .filter(a => this.state.throws.has(a[0]))
+                    {((Object.entries(this.props.character.abilities) as unknown) as [
+                        AbilityType,
+                        Ability
+                    ][])
+                        .filter((a) => this.state.throws.has(a[0]))
                         .map((a) => (
                             <Segment key={a[0]} raised={this.isProficientInThrow(a[0])}>
                                 <Icon
@@ -89,14 +88,16 @@ export class SheetSkills extends React.Component<Props, State> {
                                 {a[1].name}
                                 <br />
                                 (&nbsp;
-                                {this.isProficientInThrow(a[0]) ?
-                                    a[1].score.modifier + " " + a[0] + " + " + this.props.character.proficiency + " prof. )"
-                                    :
-                                    a[1].score.modifier + " " + a[0] + " )"
-                                }
+                                {this.isProficientInThrow(a[0])
+                                    ? a[1].score.modifier +
+                                      ' ' +
+                                      a[0] +
+                                      ' + ' +
+                                      this.props.character.proficiency +
+                                      ' prof. )'
+                                    : a[1].score.modifier + ' ' + a[0] + ' )'}
                             </Segment>
-                        ))
-                    }
+                        ))}
                 </List>
                 <h3>Skills</h3>
                 <List ordered={false}>

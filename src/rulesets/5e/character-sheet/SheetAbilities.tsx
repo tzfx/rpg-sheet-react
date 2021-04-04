@@ -11,9 +11,8 @@ type State = {
 };
 
 export class SheetAbilities extends React.Component<Props, State> {
-    
     private rng: Random = new Random();
-    
+
     constructor(props: Props) {
         super(props);
         this.state = { ...props };
@@ -28,8 +27,8 @@ export class SheetAbilities extends React.Component<Props, State> {
                     this.state.character.abilities.int,
                     this.state.character.abilities.wis,
                     this.state.character.abilities.cha,
-                ].map(stat => (
-                    <SheetAbility key={stat.name} ability={stat} rng={this.rng} ></SheetAbility>
+                ].map((stat) => (
+                    <SheetAbility key={stat.name} ability={stat} rng={this.rng}></SheetAbility>
                 ))}
             </Grid.Column>
         );

@@ -26,7 +26,7 @@ class CharacterSheet extends React.Component<Props, State> {
         this.state = {
             loading: false,
             character: new Esh(),
-            rng: new Random()
+            rng: new Random(),
         };
     }
 
@@ -43,30 +43,28 @@ class CharacterSheet extends React.Component<Props, State> {
     render() {
         return (
             <div>
-                {
-                    this.state.character == null ? (
-                        <Placeholder></Placeholder>
-                    ) : (
-                            <Grid>
-                                <SheetHeader {...this.state}></SheetHeader>
-                                <Grid.Row columns={3}>
-                                    <Grid.Column>
-                                        <SheetAbilities {...this.state}></SheetAbilities>
-                                        <SheetPerception {...this.state}></SheetPerception>
-                                    </Grid.Column>
-                                    <Grid.Column>
-                                        <SheetInspiration {...this.state}></SheetInspiration>
-                                        <SheetProficiency {...this.state}></SheetProficiency>
-                                        <SheetStatuses {...this.state}></SheetStatuses>
-                                    </Grid.Column>
-                                    <Grid.Column>
-                                        <SheetSkills {...this.state}></SheetSkills>
-                                    </Grid.Column>
-                                    <SheetOtherProficiencies {...this.state}></SheetOtherProficiencies>
-                                </Grid.Row>
-                            </Grid>
-                        )
-                }
+                {this.state.character == null ? (
+                    <Placeholder></Placeholder>
+                ) : (
+                    <Grid>
+                        <SheetHeader {...this.state}></SheetHeader>
+                        <Grid.Row columns={3}>
+                            <Grid.Column>
+                                <SheetAbilities {...this.state}></SheetAbilities>
+                                <SheetPerception {...this.state}></SheetPerception>
+                            </Grid.Column>
+                            <Grid.Column>
+                                <SheetInspiration {...this.state}></SheetInspiration>
+                                <SheetProficiency {...this.state}></SheetProficiency>
+                                <SheetStatuses {...this.state}></SheetStatuses>
+                            </Grid.Column>
+                            <Grid.Column>
+                                <SheetSkills {...this.state}></SheetSkills>
+                            </Grid.Column>
+                            <SheetOtherProficiencies {...this.state}></SheetOtherProficiencies>
+                        </Grid.Row>
+                    </Grid>
+                )}
             </div>
         );
     }

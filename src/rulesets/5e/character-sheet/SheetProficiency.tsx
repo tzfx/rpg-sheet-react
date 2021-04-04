@@ -20,7 +20,7 @@ export class SheetProficiency extends React.Component<Props, State> {
         return (
             <Segment raised>
                 +{this.state.value}
-                <br/>
+                <br />
                 Proficiency
             </Segment>
         );

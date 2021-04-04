@@ -12,40 +12,38 @@ import { Yevgeni } from './rulesets/5e/example/Yevgeni';
 import { Esh } from './rulesets/5e/example/Esh';
 
 type State = {
-  characters: Character[],
-  open?: Character,
-  selection: string
-}
+    characters: Character[];
+    open?: Character;
+    selection: string;
+};
 
 export default class App extends React.Component<{}, State> {
+    private characterService: CharacterService;
 
-  private characterService: CharacterService;
+    handleViewChange = (selection: string) => {
+        this.setState({ selection });
+    };
 
-  constructor() {
-    super({});
-    this.characterService = new CharacterService();
-    this.state = {
-      characters: [],
-      selection: 'character-list'
-    }
-    this.characterService.getCharacters()
-      .then((characters) => {
-        this.setState({
-          characters:
-            [
-              new Yevgeni(),
-              new Esh()
-            ]
+    constructor() {
+        super({});
+        this.characterService = new CharacterService();
+        this.state = {
+            characters: [],
+            selection: 'character-list',
+        };
+        this.characterService.getCharacters().then((characters) => {
+            this.setState({
+                characters: [new Yevgeni(), new Esh()],
+            });
         });
-      });
-  }
+    }
 
-  render = () => (
-    <div className="App" >
-      <Container>
-        <AppHeader></AppHeader>
-        <CharacterList characters={this.state.characters}></CharacterList>
-      </Container>
-    </div>
-  );
+    render = () => (
+        <div className="App">
+            <Container>
+                <AppHeader></AppHeader>
+                <CharacterList characters={this.state.characters}></CharacterList>
+            </Container>
+        </div>
+    );
 }

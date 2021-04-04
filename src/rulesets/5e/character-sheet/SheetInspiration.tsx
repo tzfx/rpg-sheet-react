@@ -15,17 +15,20 @@ export class SheetInspiration extends React.Component<Props, State> {
         super(props);
         this.state = { checked: props.character.inspiration };
     }
-    
+
     toggle = () =>
         this.setState({
-            checked: !this.state.checked
+            checked: !this.state.checked,
         });
 
     render() {
         return (
             <Segment raised>
                 <Button active={this.state.checked} onClick={this.toggle}>
-                    <Icon size="large" name={this.state.checked ? 'check square outline' : 'square outline'}></Icon>
+                    <Icon
+                        size="large"
+                        name={this.state.checked ? 'check square outline' : 'square outline'}
+                    ></Icon>
                     Inspiration
                 </Button>
             </Segment>
