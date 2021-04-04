@@ -6,10 +6,10 @@ import { Armor } from './equipment/armor/Armor.types';
 import { RangedWeapon, Weapon, WeaponType } from './equipment/weapons/Weapon.types';
 
 export type Proficiencies = {
-    weapon: Set<WeaponType>,
-    throws: Set<AbilityType>,
-    skills: Set<any>
-}
+    weapon: Set<WeaponType>;
+    throws: Set<AbilityType>;
+    skills: Set<any>;
+};
 
 export class Character {
     id: string = uuid58();

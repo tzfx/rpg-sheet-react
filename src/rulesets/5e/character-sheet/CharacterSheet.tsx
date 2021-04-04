@@ -1,8 +1,8 @@
 import { Random } from 'random-js';
 import React from 'react';
-import { Divider, Grid, Placeholder } from 'semantic-ui-react';
+import { Divider, Dropdown, Grid, Header, Menu, Placeholder } from 'semantic-ui-react';
 import { Character } from '../Character';
-import { Yevgeni } from '../example/Yevgeni';
+import { Esh } from '../example/Esh';
 import { SheetAbilities } from './SheetAbilities';
 import { SheetHeader } from './SheetHeader';
 import { SheetInspiration } from './SheetInspiration';
@@ -25,7 +25,7 @@ class CharacterSheet extends React.Component<Props, State> {
         super(props);
         this.state = {
             loading: false,
-            character: new Yevgeni(),
+            character: new Esh(),
             rng: new Random()
         };
     }
@@ -42,32 +42,32 @@ class CharacterSheet extends React.Component<Props, State> {
 
     render() {
         return (
-                <div>
+            <div>
                 {
                     this.state.character == null ? (
-                    <Placeholder></Placeholder>
-                ) : (
-                    <Grid>
-                            <SheetHeader {...this.state}></SheetHeader>
-                            <Grid.Row columns={3}>
-                                <Grid.Column>
-                                    <SheetAbilities {...this.state}></SheetAbilities>
-                                    <SheetPerception {...this.state}></SheetPerception>
-                                </Grid.Column>
-                                <Grid.Column>
-                                    <SheetInspiration {...this.state}></SheetInspiration>
-                                    <SheetProficiency {...this.state}></SheetProficiency>
-                                    <SheetStatuses {...this.state}></SheetStatuses>
-                                </Grid.Column>
-                                <Grid.Column>
-                                    <SheetSkills {...this.state}></SheetSkills>
-                                </Grid.Column>
-                                <SheetOtherProficiencies {...this.state}></SheetOtherProficiencies>
-                            </Grid.Row>
-                    </Grid>
-                )
-            }
-        </div>
+                        <Placeholder></Placeholder>
+                    ) : (
+                            <Grid>
+                                <SheetHeader {...this.state}></SheetHeader>
+                                <Grid.Row columns={3}>
+                                    <Grid.Column>
+                                        <SheetAbilities {...this.state}></SheetAbilities>
+                                        <SheetPerception {...this.state}></SheetPerception>
+                                    </Grid.Column>
+                                    <Grid.Column>
+                                        <SheetInspiration {...this.state}></SheetInspiration>
+                                        <SheetProficiency {...this.state}></SheetProficiency>
+                                        <SheetStatuses {...this.state}></SheetStatuses>
+                                    </Grid.Column>
+                                    <Grid.Column>
+                                        <SheetSkills {...this.state}></SheetSkills>
+                                    </Grid.Column>
+                                    <SheetOtherProficiencies {...this.state}></SheetOtherProficiencies>
+                                </Grid.Row>
+                            </Grid>
+                        )
+                }
+            </div>
         );
     }
 }
