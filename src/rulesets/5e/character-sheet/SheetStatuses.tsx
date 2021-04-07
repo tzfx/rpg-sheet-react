@@ -16,10 +16,6 @@ type Props = {
 export class SheetStatuses extends React.Component<Props> {
     private rng = new Random();
 
-    constructor(props: Props) {
-        super(props);
-    }
-
     render() {
         return (
             <Segment raised>

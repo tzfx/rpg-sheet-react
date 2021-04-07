@@ -1,6 +1,7 @@
 import { Random } from 'random-js';
 import React from 'react';
 import { Button, Icon, Segment } from 'semantic-ui-react';
+import { getModifier } from '../Abilities';
 import { Character } from '../Character';
 
 type Props = {
@@ -22,7 +23,7 @@ export class SheetInitiative extends React.Component<Props, State> {
 
     roll = () => {
         this.setState({
-            initiative: this.props.rng.die(20) + this.props.character.abilities.dex.score.modifier,
+            initiative: this.props.rng.die(20) + getModifier(this.props.character.abilities.dex),
         });
     };
 

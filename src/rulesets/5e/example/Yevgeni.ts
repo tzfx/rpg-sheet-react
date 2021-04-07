@@ -1,7 +1,6 @@
-import { Random } from 'random-js';
 import { uuid58 } from 'uuid-base58';
-import { Abilities, ABILITIES, AbilityType } from '../Abilities';
-import { Character, Proficiencies } from '../Character';
+import { Abilities, AbilityType } from '../Abilities';
+import { CharacterData, Proficiencies } from '../Character';
 import { Alignment, CharacterBio } from '../CharacterBio.interface';
 import { Ranger } from '../class/Ranger';
 import { Armor } from '../equipment/armor/Armor.types';
@@ -18,34 +17,18 @@ const bio: CharacterBio = {
     sex: 'M',
     height: 52,
     weight: 150,
-    background: 'Haunted One',
+    background: 'Urchin',
     alignment: Alignment.LAWFUL_NEUTRAL,
 };
 
-const abilities: Abilities = Array.from(ABILITIES.entries()).reduce((a, c) => {
-    a[c[0]] = c[1];
-    switch (c[0]) {
-        case 'str':
-            a[c[0]].score.score = 14;
-            break;
-        case 'dex':
-            a[c[0]].score.score = 19;
-            break;
-        case 'con':
-            a[c[0]].score.score = 14;
-            break;
-        case 'int':
-            a[c[0]].score.score = 12;
-            break;
-        case 'wis':
-            a[c[0]].score.score = 16;
-            break;
-        case 'cha':
-            a[c[0]].score.score = 10;
-            break;
-    }
-    return a;
-}, {} as Abilities);
+const abilities: Abilities = {
+    str: 14,
+    dex: 19,
+    con: 14,
+    int: 12,
+    wis: 16,
+    cha: 10
+};
 
 const proficiencies: Proficiencies = {
     weapon: new Set<WeaponType>(['simple', 'marital']),
@@ -53,12 +36,22 @@ const proficiencies: Proficiencies = {
     skills: new Set<Skill>([AnimalHandling, Stealth, Survival]),
 };
 
-export class Yevgeni extends Character {
-    rng = new Random();
-    inspiration = true;
-    level = 4;
-    languages = ['Common', 'Orcish', 'Sylvan'];
-    combat = {
+export const Yevgeni: CharacterData = {
+    inventory: [],
+    deathSaves: {
+        live: 0,
+        die: 0
+    },
+    health: {
+        current: 15,
+        max: 36
+    },
+    proficiencies,
+    id: "2",
+    inspiration: true,
+    level: 6,
+    languages: ['Common', 'Orcish', 'Sylvan'],
+    combat: {
         armor: {
             name: 'Leather Armor',
             ac: 12,
@@ -77,13 +70,10 @@ export class Yevgeni extends Character {
             cost: 2,
             type: 'marital',
         } as RangedWeapon,
-    };
-    currency = { pp: 0, gp: 0, sp: 0, cp: 0 };
-    hitDice = { number: 4, type: 10 };
-    xp = 0;
-    proficiency = 2;
-
-    constructor() {
-        super(bio, abilities, proficiencies);
-    }
+    },
+    currency: { pp: 0, gp: 0, sp: 0, cp: 0 },
+    xp: 0,
+    proficiency: 3,
+    bio,
+    abilities
 }

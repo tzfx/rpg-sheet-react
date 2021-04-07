@@ -1,6 +1,5 @@
-import { Random } from 'random-js';
 import React from 'react';
-import { Button, Icon, Segment } from 'semantic-ui-react';
+import { Icon, Segment } from 'semantic-ui-react';
 import { Character } from '../Character';
 
 type Props = {
@@ -8,9 +7,6 @@ type Props = {
 };
 
 export class SheetSpeed extends React.Component<Props> {
-    constructor(props: Props) {
-        super(props);
-    }
 
     render() {
         return (

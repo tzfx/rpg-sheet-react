@@ -1,18 +1,19 @@
 import { Random } from 'random-js';
 
-export interface Ability {
-    name: string;
-    score: AbilityScore;
-}
+export type Abilities = {
+    [key in AbilityType]: number;
+};
 
-export interface Abilities {
-    str: Ability;
-    dex: Ability;
-    con: Ability;
-    int: Ability;
-    wis: Ability;
-    cha: Ability;
-}
+// export interface Abilities {
+//     str: Ability;
+//     dex: Ability;
+//     con: Ability;
+//     int: Ability;
+//     wis: Ability;
+//     cha: Ability;
+// }
+
+export const getModifier = (score: number) => Math.floor((score - 10)/2);
 
 export class AbilityScore {
     private static BASE_SCORE = 10;
@@ -53,10 +54,7 @@ export class AbilityScore {
     }
 
     get modifier(): number {
-        const norm = this.score % 2 ? this.score : this.score - 1;
-        const step = norm - AbilityScore.BASE_SCORE;
-        if (step === 0) return step;
-        else return Math.floor(step - ((step < 0 ? -1 : 1) * step) / 2);
+        return getModifier(this.score);
     }
 
     get score(): number {
@@ -64,30 +62,14 @@ export class AbilityScore {
     }
 }
 
-export const ABILITIES: Map<AbilityType, Ability> = new Map()
-    .set('str', {
-        name: 'Strength',
-        score: new AbilityScore(),
-    })
-    .set('dex', {
-        name: 'Dexterity',
-        score: new AbilityScore(),
-    })
-    .set('con', {
-        name: 'Constitution',
-        score: new AbilityScore(),
-    })
-    .set('int', {
-        name: 'Intelligence',
-        score: new AbilityScore(),
-    })
-    .set('wis', {
-        name: 'Wisdom',
-        score: new AbilityScore(),
-    })
-    .set('cha', {
-        name: 'Charisma',
-        score: new AbilityScore(),
-    });
+export const Ability2Name: { [key in AbilityType]: string } = {
+    str: 'Strength',
+    dex: 'Dexterity',
+    con: 'Constitution',
+    int: 'Intelligence',
+    wis: 'Wisdom',
+    cha: 'Charisma',
+};
 
 export type AbilityType = 'str' | 'dex' | 'con' | 'int' | 'wis' | 'cha';
+export const ABILITY_TYPES: AbilityType[] = ['str', 'dex', 'con', 'int', 'wis', 'cha'];

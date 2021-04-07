@@ -11,17 +11,23 @@ import { AppHeader } from './AppHeader';
 import { Yevgeni } from './rulesets/5e/example/Yevgeni';
 import { Esh } from './rulesets/5e/example/Esh';
 
+type ViewOptions = 'character-list' | 'character-sheet';
+
 type State = {
     characters: Character[];
     open?: Character;
-    selection: string;
+    selection: ViewOptions;
 };
 
 export default class App extends React.Component<{}, State> {
     private characterService: CharacterService;
 
-    handleViewChange = (selection: string) => {
+    handleViewChange = (selection: ViewOptions) => {
         this.setState({ selection });
+    };
+
+    handleCharacterSelect = (character: Character) => {
+        this.setState({ open: character }, () => this.handleViewChange('character-sheet'));
     };
 
     constructor() {
@@ -33,7 +39,7 @@ export default class App extends React.Component<{}, State> {
         };
         this.characterService.getCharacters().then((characters) => {
             this.setState({
-                characters: [new Yevgeni(), new Esh()],
+                characters: [Yevgeni as Character, Esh as Character],
             });
         });
     }
@@ -42,7 +48,16 @@ export default class App extends React.Component<{}, State> {
         <div className="App">
             <Container>
                 <AppHeader></AppHeader>
-                <CharacterList characters={this.state.characters}></CharacterList>
+                {this.state.selection === 'character-sheet' && this.state.open != null ? (
+                    <CharacterSheet character={this.state.open}></CharacterSheet>
+                ) : this.state.selection === 'character-list' ? (
+                    <CharacterList
+                        select$={(character: Character) => this.handleCharacterSelect(character)}
+                        characters={this.state.characters}
+                    ></CharacterList>
+                ) : (
+                    ''
+                )}
             </Container>
         </div>
     );

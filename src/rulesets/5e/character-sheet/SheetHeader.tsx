@@ -1,5 +1,5 @@
 import React from 'react';
-import { BreadcrumbDivider, Grid, Item, Label, Segment } from 'semantic-ui-react';
+import { Grid, Segment } from 'semantic-ui-react';
 import { Character } from '../Character';
 
 type Props = { character: Character };
@@ -42,7 +42,7 @@ export class SheetHeader extends React.Component<Props, State> {
                             {[
                                 ['Race', this.state.character.bio.race.name],
                                 ['Alignment', this.state.character.bio.alignment.toLocaleString()],
-                                ['xp', this.state.character.xp],
+                                ['xp', this.state.character.xp ?? 'N/A'],
                             ].map((e, i) => (
                                 <Grid.Column key={i} width={5}>
                                     <strong>{e[1]}</strong>

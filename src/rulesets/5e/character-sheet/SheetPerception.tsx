@@ -10,7 +10,7 @@ export class SheetPerception extends React.Component<Props> {
     render() {
         return (
             <Segment raised>
-                {this.props.character.abilities.wis.score.score}
+                {this.props.character.abilities.wis}
                 <br />
                 Passive Perception (wis)
             </Segment>

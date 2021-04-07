@@ -1,8 +1,7 @@
 import { Random } from 'random-js';
 import React from 'react';
-import { Divider, Dropdown, Grid, Header, Menu, Placeholder } from 'semantic-ui-react';
+import { Grid, Placeholder } from 'semantic-ui-react';
 import { Character } from '../Character';
-import { Esh } from '../example/Esh';
 import { SheetAbilities } from './SheetAbilities';
 import { SheetHeader } from './SheetHeader';
 import { SheetInspiration } from './SheetInspiration';
@@ -12,7 +11,7 @@ import { SheetProficiency } from './SheetProficiency';
 import { SheetSkills } from './SheetSkills';
 import { SheetStatuses } from './SheetStatuses';
 
-type Props = { id: string };
+type Props = { character: Character };
 
 type State = {
     loading: boolean;
@@ -25,19 +24,9 @@ class CharacterSheet extends React.Component<Props, State> {
         super(props);
         this.state = {
             loading: false,
-            character: new Esh(),
+            character: props.character,
             rng: new Random(),
         };
-    }
-
-    componentDidMount() {
-        // CharacterService.getCharacter(this.props.uuid)
-        //   .then((res) => res.json())
-        //   .then((char: Character) => {
-        //     this.setState({ character: char }, () => {
-        //       this.setState({ loading: false });
-        //     });
-        //   });
     }
 
     render() {

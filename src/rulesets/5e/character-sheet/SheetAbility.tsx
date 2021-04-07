@@ -1,14 +1,19 @@
 import { Random } from 'random-js';
 import React from 'react';
-import { Button, Card, Icon, Label, Loader, Transition } from 'semantic-ui-react';
-import { Ability } from '../Abilities';
+import { Button, Card, Icon, Label, Transition } from 'semantic-ui-react';
+import { Abilities, Ability2Name, AbilityScore, AbilityType } from '../Abilities';
 
 type Props = {
-    ability: Ability;
+    type: AbilityType;
+    abilities: Abilities;
+    proficiencies: Set<AbilityType>;
+    proficiency: number;
     rng: Random;
 };
 
 type State = {
+    score: number;
+    name: string;
     modifier: number;
     roll: number;
     rolling: boolean;
@@ -20,14 +25,18 @@ export class SheetAbility extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            modifier: this.props.ability.score.modifier,
+            name: Ability2Name[this.props.type],
+            score: this.props.abilities[this.props.type],
+            modifier: new AbilityScore(this.props.abilities[this.props.type]).modifier,
             roll: 0,
             rolling: false,
         };
     }
 
+    isProficient = (ability: AbilityType) => this.props.proficiencies.has(ability);
+
     getModifierColor = () => {
-        const mod = this.props.ability.score.modifier;
+        const mod = this.state.modifier;
         if (mod > 0) {
             return 'positive';
         } else if (mod < 0) {
@@ -38,13 +47,17 @@ export class SheetAbility extends React.Component<Props, State> {
     };
 
     getModifierText = () => {
-        return this.state.modifier > 0
-            ? '+'.concat(this.state.modifier.toString())
-            : this.state.modifier.toString();
+        return `${
+            this.state.modifier > 0
+                ? '+'.concat(this.state.modifier.toString())
+                : this.state.modifier.toString()
+        }`;
     };
 
     rollModifier = () => {
-        const roll = this.props.rng.dice(20, 1)[0] + this.state.modifier;
+        const roll =
+            this.props.rng.dice(20, 1)[0] +
+            this.state.modifier;
         this.setState({ roll });
     };
 
@@ -56,9 +69,18 @@ export class SheetAbility extends React.Component<Props, State> {
         return (
             <Card centered>
                 <Card.Content>
-                    <Card.Header>{this.props.ability.name}</Card.Header>
+                    <Card.Header>
+                        <Icon
+                            name={
+                                this.isProficient(this.props.type)
+                                    ? 'check circle'
+                                    : 'circle outline'
+                            }
+                        ></Icon>
+                        {this.state.name}
+                    </Card.Header>
                     <Card.Description>
-                        <strong>{this.props.ability.score.score}</strong>
+                        <strong>{this.state.score}</strong>
                         &nbsp;→&nbsp;
                         <span color={this.getModifierColor()}>{this.getModifierText()}</span>
                     </Card.Description>

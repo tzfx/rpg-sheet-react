@@ -1,4 +1,3 @@
-import { Random } from 'random-js';
 import React from 'react';
 import { Button, Icon, Segment } from 'semantic-ui-react';
 import { Character } from '../Character';
@@ -15,7 +14,7 @@ export class SheetHitDice extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            dice: props.character.hitDice.number,
+            dice: props.character.level,
         };
     }
 
