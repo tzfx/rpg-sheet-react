@@ -31,7 +31,7 @@ export class SheetSkills extends React.Component<Props, State> {
 
     search = (event: React.KeyboardEvent<HTMLInputElement>) => {
         const query = event.currentTarget.value;
-        if (query != '')
+        if (query !== '')
             this.setState({
                 skills: new Set(
                     Array.from(this.props.character.proficiencies.skills)
