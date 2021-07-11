@@ -1,7 +1,8 @@
 import { Random } from 'random-js';
+import { AbilityScoreName } from 'dnd5e'
 
 export type Abilities = {
-    [key in AbilityType]: number;
+    [key in AbilityScoreName]: number;
 };
 
 // export interface Abilities {
@@ -62,14 +63,14 @@ export class AbilityScore {
     }
 }
 
-export const Ability2Name: { [key in AbilityType]: string } = {
-    str: 'Strength',
-    dex: 'Dexterity',
-    con: 'Constitution',
-    int: 'Intelligence',
-    wis: 'Wisdom',
-    cha: 'Charisma',
+export const Ability2Name: { [key in AbilityScoreName]: string } = {
+    STR: 'Strength',
+    DEX: 'Dexterity',
+    CON: 'Constitution',
+    INT: 'Intelligence',
+    WIS: 'Wisdom',
+    CHA: 'Charisma',
 };
 
-export type AbilityType = 'str' | 'dex' | 'con' | 'int' | 'wis' | 'cha';
-export const ABILITY_TYPES: AbilityType[] = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
+// export type AbilityType = 'str' | 'dex' | 'con' | 'int' | 'wis' | 'cha';
+export const ABILITY_TYPES: AbilityScoreName[] = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'];

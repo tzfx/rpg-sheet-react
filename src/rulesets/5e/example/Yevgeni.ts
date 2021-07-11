@@ -1,12 +1,13 @@
+import { AbilityScoreName } from 'dnd5e';
 import { uuid58 } from 'uuid-base58';
-import { Abilities, AbilityType } from '../Abilities';
+import { Abilities } from '../Abilities';
 import { CharacterData, Proficiencies } from '../Character';
 import { Alignment, CharacterBio } from '../CharacterBio.interface';
 import { Ranger } from '../class/Ranger';
 import { Armor } from '../equipment/armor/Armor.types';
 import { RangedWeapon, WeaponType } from '../equipment/weapons/Weapon.types';
 import { human } from '../race/Human';
-import { AnimalHandling, Skill, Stealth, Survival } from '../skills/Skills';
+// import { AnimalHandling, Skill, Stealth, Survival } from '../skills/Skills';
 
 const bio: CharacterBio = {
     id: uuid58(),
@@ -22,18 +23,18 @@ const bio: CharacterBio = {
 };
 
 const abilities: Abilities = {
-    str: 14,
-    dex: 19,
-    con: 14,
-    int: 12,
-    wis: 16,
-    cha: 10
+    STR: 14,
+    DEX: 19,
+    CON: 14,
+    INT: 12,
+    WIS: 16,
+    CHA: 10
 };
 
 const proficiencies: Proficiencies = {
     weapon: new Set<WeaponType>(['simple', 'marital']),
-    throws: new Set<AbilityType>(['str', 'dex']),
-    skills: new Set<Skill>([AnimalHandling, Stealth, Survival]),
+    throws: new Set<AbilityScoreName>(['STR', 'DEX']),
+    skills: new Set(),
 };
 
 export const Yevgeni: CharacterData = {

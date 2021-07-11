@@ -49,9 +49,9 @@ export class SheetDeathSaves extends React.Component<Props, State> {
                 <br />
                 {new Array(3).fill(true).map((_, i) => {
                     return i >= this.state.life ? (
-                        <Icon name="square outline"></Icon>
+                        <Icon name="square outline" key={`lo${i}`}></Icon>
                     ) : (
-                        <Icon name="check square"></Icon>
+                        <Icon name="check square" key={`lx${i}`}></Icon>
                     );
                 })}
                 <Icon name="medkit"></Icon>
@@ -59,9 +59,9 @@ export class SheetDeathSaves extends React.Component<Props, State> {
                 <br />
                 {new Array(3).fill(true).map((_, i) => {
                     return i >= this.state.death ? (
-                        <Icon name="square outline"></Icon>
+                        <Icon name="square outline" key={`do${i}`}></Icon>
                     ) : (
-                        <Icon name="check square"></Icon>
+                        <Icon name="check square" key={`dx${i}`}></Icon>
                     );
                 })}
                 <Icon name="bomb"></Icon>

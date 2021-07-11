@@ -13,13 +13,14 @@ import { Esh } from './rulesets/5e/example/Esh';
 
 type ViewOptions = 'character-list' | 'character-sheet';
 
+type Props = {};
 type State = {
     characters: Character[];
     open?: Character;
     selection: ViewOptions;
 };
 
-export default class App extends React.Component<{}, State> {
+export default class App extends React.Component<Props, State> {
     private characterService: CharacterService;
 
     handleViewChange = (selection: ViewOptions) => {
@@ -30,8 +31,8 @@ export default class App extends React.Component<{}, State> {
         this.setState({ open: character }, () => this.handleViewChange('character-sheet'));
     };
 
-    constructor() {
-        super({});
+    constructor(props: Props) {
+        super(props);
         this.characterService = new CharacterService();
         this.state = {
             characters: [],
@@ -39,7 +40,7 @@ export default class App extends React.Component<{}, State> {
         };
         this.characterService.getCharacters().then((characters) => {
             this.setState({
-                characters: [Yevgeni as Character, Esh as Character],
+                characters: [Yevgeni as Character, new Character(Esh)],
             });
         });
     }

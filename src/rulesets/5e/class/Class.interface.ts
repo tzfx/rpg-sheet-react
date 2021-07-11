@@ -1,4 +1,4 @@
-import { AbilityType } from '../Abilities';
+import { AbilityScoreName } from 'dnd5e';
 import { WeaponType } from '../equipment/weapons/Weapon.types';
 
 export interface Class {
@@ -8,7 +8,7 @@ export interface Class {
     hitDie: number;
     proficiencies: {
         weapon: Set<WeaponType>;
-        throws: Set<AbilityType>;
+        throws: Set<AbilityScoreName>;
         skills: Set<any>;
     };
     // skills: Set<Skill>;

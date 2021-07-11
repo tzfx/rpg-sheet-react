@@ -1,12 +1,13 @@
+import { AbilityScoreName } from 'dnd5e';
 import { Random } from 'random-js';
 import React from 'react';
 import { Button, Card, Icon, Label, Transition } from 'semantic-ui-react';
-import { Abilities, Ability2Name, AbilityScore, AbilityType } from '../Abilities';
+import { Abilities, Ability2Name, AbilityScore } from '../Abilities';
 
 type Props = {
-    type: AbilityType;
+    type: AbilityScoreName;
     abilities: Abilities;
-    proficiencies: Set<AbilityType>;
+    proficiencies: Set<AbilityScoreName>;
     proficiency: number;
     rng: Random;
 };
@@ -33,7 +34,7 @@ export class SheetAbility extends React.Component<Props, State> {
         };
     }
 
-    isProficient = (ability: AbilityType) => this.props.proficiencies.has(ability);
+    isProficient = (ability: AbilityScoreName) => this.props.proficiencies.has(ability);
 
     getModifierColor = () => {
         const mod = this.state.modifier;

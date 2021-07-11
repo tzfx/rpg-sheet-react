@@ -1,4 +1,4 @@
-import { AbilityType } from '../Abilities';
+import { AbilityScoreName } from 'dnd5e';
 import { WeaponType } from '../equipment/weapons/Weapon.types';
 import { Class } from './Class.interface';
 
@@ -9,7 +9,7 @@ export class Cleric implements Class {
     hitDie = 8;
     proficiencies = {
         weapon: new Set<WeaponType>(['simple', 'marital']),
-        throws: new Set<AbilityType>(['wis', 'cha']),
+        throws: new Set<AbilityScoreName>(['WIS', 'CHA']),
         skills: new Set<any>(),
     };
     spells: unknown;

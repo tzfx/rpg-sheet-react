@@ -17,6 +17,7 @@ type State = {
     loading: boolean;
     character: Character;
     rng: Random;
+    editting: boolean;
 };
 
 class CharacterSheet extends React.Component<Props, State> {
@@ -26,6 +27,7 @@ class CharacterSheet extends React.Component<Props, State> {
             loading: false,
             character: props.character,
             rng: new Random(),
+            editting: false
         };
     }
 

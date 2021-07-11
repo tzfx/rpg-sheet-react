@@ -1,8 +1,12 @@
 import React from 'react';
 import { Icon, Input, List, Segment } from 'semantic-ui-react';
-import { getModifier } from '../Abilities';
+// import { getModifier } from '../Abilities';
 import { Character } from '../Character';
-import { Skill, Skills } from '../skills/Skills';
+// import { Skill, Skills } from '../skills/Skills';
+import { AbilityScoreName, Skill } from 'dnd5e';
+import { SRDAPI } from '../../../data/SRDAPI';
+import { getModifier } from '../Abilities';
+// import { ClientEndpoints as API } from 'dnd5e-client';
 
 type Props = {
     character: Character;
@@ -10,40 +14,49 @@ type Props = {
 
 type State = {
     search?: string;
-    skills: Set<Skill>;
+    skills: Skill[];
+    filtered: Skill[];
 };
 
 export class SheetSkills extends React.Component<Props, State> {
+    api = SRDAPI;
+
     constructor(props: Props) {
         super(props);
-        if (props.character.bio != null)
-            this.state = {
-                skills: new Set(Array.from(props.character.proficiencies.skills).concat(Skills)),
-            };
+        this.state = { skills: [], filtered: [] };
     }
 
+    componentDidMount = async () => {
+        try {
+            const skillList = (await this.api.skills()).results as Skill[];
+            const skillsDetails = skillList.map(async (s) => await this.api.skills(s.index));
+            const res = await Promise.all(skillsDetails);
+            // console.log(await Promise.all(skillsDetails));
+            skillList.forEach((s, i) => {
+                skillList[i] = { ...s, ...res[i] };
+            });
+            // console.log(skillList);
+            this.setState({ skills: skillList, filtered: skillList });
+        } catch (err) {
+            throw new Error(err);
+        }
+    };
 
     isProficientInSkill = (skill: Skill) => {
-        return Array.from(this.props.character.proficiencies.skills).some(
-            (s) => s.name === skill.name
-        );
+        return Array.from(this.props.character.proficiencies.skills).some((s) => s === skill.name);
     };
 
     search = (event: React.KeyboardEvent<HTMLInputElement>) => {
         const query = event.currentTarget.value;
         if (query !== '')
             this.setState({
-                skills: new Set(
-                    Array.from(this.props.character.proficiencies.skills)
-                        .concat(Skills)
-                        .filter((a) => a.name.toLowerCase().startsWith(query.toLowerCase()))
+                filtered: this.state.filtered.filter((a) =>
+                    a.name.toLowerCase().startsWith(query.toLowerCase())
                 ),
             });
-        else if (this.props.character.bio != null)
+        else
             this.setState({
-                skills: new Set(
-                    Array.from(this.props.character.proficiencies.skills).concat(Skills)
-                ),
+                filtered: this.state.skills,
             });
     };
 
@@ -56,8 +69,8 @@ export class SheetSkills extends React.Component<Props, State> {
                     <Icon name="search"></Icon>
                 </Input>
                 <List ordered={false}>
-                    {Array.from(this.state.skills).map((skill) => (
-                        <Segment key={skill.name} raised={this.isProficientInSkill(skill)}>
+                    {this.state.filtered.map((skill) => (
+                        <Segment title={skill.desc} key={skill.name} raised={this.isProficientInSkill(skill)}>
                             <Icon
                                 name={
                                     this.isProficientInSkill(skill)
@@ -68,8 +81,10 @@ export class SheetSkills extends React.Component<Props, State> {
                             {skill.name}
                             <br />
                             <span color="grey">
-                                ( {getModifier(this.props.character.abilities[skill.ability])}{' '}
-                                {skill.ability}
+                                ( {getModifier(this.props.character.abilities[(skill.ability_score as any).name as AbilityScoreName])}
+                                {' '}
+                                {(skill.ability_score as any).index}
+                                {' '}
                                 {this.isProficientInSkill(skill)
                                     ? ' + '
                                           .concat(this.props.character.proficiency.toString())

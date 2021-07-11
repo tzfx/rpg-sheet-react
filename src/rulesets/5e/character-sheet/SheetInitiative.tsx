@@ -1,6 +1,6 @@
 import { Random } from 'random-js';
 import React from 'react';
-import { Button, Icon, Segment } from 'semantic-ui-react';
+import { Button, Icon, Input, Segment } from 'semantic-ui-react';
 import { getModifier } from '../Abilities';
 import { Character } from '../Character';
 
@@ -23,20 +23,28 @@ export class SheetInitiative extends React.Component<Props, State> {
 
     roll = () => {
         this.setState({
-            initiative: this.props.rng.die(20) + getModifier(this.props.character.abilities.dex),
+            initiative: this.props.rng.die(20) + getModifier(this.props.character.abilities.DEX),
         });
     };
 
     render() {
         return (
-            <Segment compact raised>
+            <Segment raised>
                 <Icon size="large" name="recycle"></Icon>
                 <br />
-                <Button
+                <Input
+                type="number"
+                size="mini"
+                fluid
+                onChange={(e) => {this.setState({initiative: e.target.valueAsNumber})}}
+                value={this.state.initiative}
+                >
+                </Input>
+                {/* <Button
                     icon="cube"
                     onClick={this.roll}
                     label={this.state.initiative.toString()}
-                ></Button>
+                ></Button> */}
                 <small>Initiative</small>
                 <br />
             </Segment>
