@@ -38,7 +38,7 @@ export type CharacterData = {
     // race: dnd5e.Race;
     bio: CharacterBio;
     abilities: Abilities;
-    languages: string[];
+    languages: dnd5e.LanguageName[];
     inventory: any[];
     combat: CombatBlock;
     currency: CurrencyBlock;

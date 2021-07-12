@@ -1,6 +1,6 @@
 import { Random } from 'random-js';
 import React from 'react';
-import { Button, Icon, Input, Segment } from 'semantic-ui-react';
+import { Icon, Input, Segment } from 'semantic-ui-react';
 import { getModifier } from '../Abilities';
 import { Character } from '../Character';
 

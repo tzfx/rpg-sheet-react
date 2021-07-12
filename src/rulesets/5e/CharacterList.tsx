@@ -1,11 +1,12 @@
 import React from 'react';
-import { Button, Table } from 'semantic-ui-react';
+import { Button, Icon, Table } from 'semantic-ui-react';
 import { Character } from './Character';
 import { get } from '../../util/get';
 
 type Props = {
     characters: Character[];
     select$: (character: Character) => void;
+    new$: () =>  void;
 };
 
 export class CharacterList extends React.Component<Props, {}> {
@@ -24,6 +25,11 @@ export class CharacterList extends React.Component<Props, {}> {
                 ))}
                 <Table.HeaderCell>Options</Table.HeaderCell>
             </Table.Header>
+            <Table.Row>
+                <Table.Cell textAlign="center" width={Object.keys(this.headers).length as any}>
+                    <Button onClick={() => this.props.new$()} size="large"><Icon name="plus"></Icon>Add a new character</Button>
+                </Table.Cell>
+            </Table.Row>
             {this.props.characters.map((character) => (
                 <Table.Row key={character.id}>
                     {Object.keys(this.headers).map((key) => (

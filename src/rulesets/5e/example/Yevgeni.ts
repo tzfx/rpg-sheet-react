@@ -1,4 +1,4 @@
-import { AbilityScoreName } from 'dnd5e';
+import { AbilityScoreName, SkillName } from 'dnd5e';
 import { uuid58 } from 'uuid-base58';
 import { Abilities } from '../Abilities';
 import { CharacterData, Proficiencies } from '../Character';
@@ -34,7 +34,7 @@ const abilities: Abilities = {
 const proficiencies: Proficiencies = {
     weapon: new Set<WeaponType>(['simple', 'marital']),
     throws: new Set<AbilityScoreName>(['STR', 'DEX']),
-    skills: new Set(),
+    skills: new Set<SkillName>(),
 };
 
 export const Yevgeni: CharacterData = {
