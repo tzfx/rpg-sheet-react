@@ -1,7 +1,11 @@
-import { Race } from 'dnd5e';
+// import { Race } from 'dnd5e';
+import { Race, fivee } from "fivee";
+// import * as fivee from "fivee";
 import React from 'react';
 import { Accordion, Button, Card, List, Loader, Segment } from 'semantic-ui-react';
-import { SRDAPI } from '../../../data/SRDAPI';
+// import { SRDAPI } from '../../../data/SRDAPI';
+
+// import { fivee } from "fivee/build/src";
 
 type Props = {
     selected$: (race: Race) => void;
@@ -33,7 +37,7 @@ const morePanel = (race: Race) => ({
                 <List.Item>
                     <List.Content>
                         <List.Header>Languages</List.Header>
-                        <List.Description>{race.language_desc}</List.Description>
+                        <List.Description>{race.languageDescription}</List.Description>
                     </List.Content>
                 </List.Item>
             </List>
@@ -42,7 +46,7 @@ const morePanel = (race: Race) => ({
 });
 
 export class RaceChooser extends React.Component<Props, State> {
-    api = SRDAPI;
+    api = fivee();
 
     constructor(props: Props) {
         super(props);
@@ -54,10 +58,8 @@ export class RaceChooser extends React.Component<Props, State> {
 
     componentDidMount = async () => {
         try {
-            const raceNames = await this.api.races();
-            const races = await Promise.all(
-                raceNames.results.map((r) => this.api.races((r as any).index))
-            );
+            const res = await this.api.races.fetchAll();
+            const races = [...res.values()];
             this.setState({ races }, () => {
                 this.setState({ loading: false });
             });
@@ -87,6 +89,7 @@ export class RaceChooser extends React.Component<Props, State> {
                 ) : (
                     this.state.races.map((race) => (
                         <Card
+                            key={race.index}
                             link
                             onClick={() => {
                                 this.setState({ selected: race });
@@ -104,9 +107,9 @@ export class RaceChooser extends React.Component<Props, State> {
                                             <List.Content>
                                                 <List.Header>Bonuses</List.Header>
                                                 <List.Description>
-                                                    {race.ability_bonuses
+                                                    {race.abilityBonuses
                                                         .map(
-                                                            (b: any) =>
+                                                            (b) =>
                                                                 `${b.ability_score.index} +${b.bonus}`
                                                         )
                                                         .join(', ')}

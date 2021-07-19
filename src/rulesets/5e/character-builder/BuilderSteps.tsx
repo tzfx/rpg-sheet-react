@@ -45,7 +45,7 @@ export class BuilderSteps extends React.Component<Props, State> {
     render = () => (
         <Step.Group size="mini" widths="6">
             {this.steps.map((step, i) => (
-                <Step active={i === this.props.step}>
+                <Step key={i} active={i === this.props.step}>
                     <Step.Title>{step.title}</Step.Title>
                     <Step.Description>{step.description}</Step.Description>
                 </Step>

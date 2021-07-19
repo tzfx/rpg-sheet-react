@@ -1,6 +1,7 @@
-import { CharClass, Race } from 'dnd5e';
+import { Class, Race } from 'fivee';
 import React from 'react';
 import { Container } from 'semantic-ui-react';
+import { AbilityScoreRoller } from './AbilityScoreRoller';
 import { BuilderSteps } from './BuilderSteps';
 import { ClassChooser } from './ClassChooser';
 import { RaceChooser } from './RaceChooser';
@@ -10,7 +11,7 @@ type Props = {};
 type State = {
     step: number;
     race?: Race;
-    clazz?: CharClass;
+    clazz?: Class;
     equipment?: [];
 };
 
@@ -27,7 +28,7 @@ export class CharacterBuilder extends React.Component<Props, State> {
             <BuilderSteps step={this.state.step}></BuilderSteps>
             {this.state.step === 0 ? (
                 <RaceChooser
-                    selected$={(race) => {
+                    selected$={(race: any) => {
                         this.setState({ race, step: this.state.step + 1 });
                     }}
                 ></RaceChooser>
@@ -37,9 +38,9 @@ export class CharacterBuilder extends React.Component<Props, State> {
                         this.setState({ clazz, step: this.state.step + 1 });
                     }}
                 ></ClassChooser>
-            ) : (
-                ''
-            )}
+            ) : this.state.step === 2  ? (
+                <AbilityScoreRoller></AbilityScoreRoller>
+            ) : ("")}
         </Container>
     );
 }

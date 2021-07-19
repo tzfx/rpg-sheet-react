@@ -2,14 +2,15 @@ import { CharClass } from 'dnd5e';
 import React from 'react';
 import { Button, Card, List, Loader, Segment } from 'semantic-ui-react';
 import { SRDAPI } from '../../../data/SRDAPI';
+import { fivee, Class } from "fivee";
 
 type Props = {
-    selected$: (race: CharClass) => void;
+    selected$: (race: Class) => void;
 };
 type State = {
     loading: boolean;
-    classes: CharClass[];
-    selected?: CharClass;
+    classes: Class[];
+    selected?: Class;
 };
 
 // const morePanel = (clazz: CharClass) => ({
@@ -42,7 +43,7 @@ type State = {
 // });
 
 export class ClassChooser extends React.Component<Props, State> {
-    api = SRDAPI;
+    api = fivee();
 
     constructor(props: Props) {
         super(props);
@@ -54,11 +55,12 @@ export class ClassChooser extends React.Component<Props, State> {
 
     componentDidMount = async () => {
         try {
-            const classNames = await this.api.classes();
-            const classes = await Promise.all(
-                classNames.results.map((r) => this.api.classes((r as any).index))
-            );
-            this.setState({ classes }, () => {
+            const classes = await this.api.classes.fetchAll();
+            // const classes = await Promise.all(
+            //     [...classNames.values()].map((r) => this.api.classes((r as any).index))
+            // );
+            console.log([...classes.values()]);
+            this.setState({ classes: [...classes.values()] }, () => {
                 this.setState({ loading: false });
             });
         } catch (err) {
@@ -87,6 +89,7 @@ export class ClassChooser extends React.Component<Props, State> {
                 ) : (
                     this.state.classes.map((clazz) => (
                         <Card
+                            key={clazz.name}
                             link
                             onClick={() => {
                                 this.setState({ selected: clazz });
@@ -107,9 +110,9 @@ export class ClassChooser extends React.Component<Props, State> {
                                         <List.Item>
                                             <List.Header>Saving Throws</List.Header>
                                             <List.Item>
-                                                <List.List bulleted>
-                                                    {clazz.saving_throws.map((prof) => (
-                                                        <List.Item>{prof.name}</List.Item>
+                                                <List.List>
+                                                    {clazz.savingThrows.map((prof) => (
+                                                        <List.Item key={prof.index}>{(prof as any).name}</List.Item>
                                                     ))}
                                                 </List.List>
                                             </List.Item>
@@ -119,7 +122,7 @@ export class ClassChooser extends React.Component<Props, State> {
                                             <List.Item>
                                                 <List bulleted>
                                                     {clazz.proficiencies.map((prof) => (
-                                                        <List.Item>{prof.name}</List.Item>
+                                                        <List.Item key={prof.index}>{(prof as any).name}</List.Item>
                                                     ))}
                                                 </List>
                                             </List.Item>
@@ -128,12 +131,12 @@ export class ClassChooser extends React.Component<Props, State> {
                                             <List.Header>Proficiency Options</List.Header>
                                             <List.Item>
                                                 <List>
-                                                    {clazz.proficiency_choices.map((prof) => (
-                                                        <List.Item>
+                                                    {clazz.proficiency_choices.map((prof, i) => (
+                                                        <List.Item key={i}>
                                                             Choose {prof.choose}:
-                                                            <List.List bulletted>
-                                                                {prof.from.map((choice) => (
-                                                                    <List.Item>
+                                                            <List.List>
+                                                                {(prof.from as any[]).map((choice) => (
+                                                                    <List.Item key={choice.name}>
                                                                         {choice.name}
                                                                     </List.Item>
                                                                 ))}
@@ -146,10 +149,10 @@ export class ClassChooser extends React.Component<Props, State> {
                                         <List.Item>
                                             <List.Header>Starting Equipment</List.Header>
                                             <List.Item>
-                                                <List.List bulleted>
-                                                    {(clazz.starting_equipment as any).map(
-                                                        (equip: any) => (
-                                                            <List.Item>
+                                                <List.List>
+                                                    {(clazz.startingEquipment as any).map(
+                                                        (equip: any, i: number) => (
+                                                            <List.Item key={i}>
                                                                 {equip.equipment.name}
                                                             </List.Item>
                                                         )
@@ -160,15 +163,15 @@ export class ClassChooser extends React.Component<Props, State> {
                                         <List.Item>
                                             <List.Header>Equipment Options</List.Header>
                                             <List.Item>
-                                                <List.List bulleted>
-                                                    {(clazz as any).starting_equipment_options.map(
-                                                        (equip: any) => (
-                                                            <List.Item>
+                                                <List.List>
+                                                    {(clazz as any).data?.starting_equipment_options?.map(
+                                                        (equip: any, i: number) => (
+                                                            <List.Item key={i}>
                                                                 Choose {equip.choose}:
-                                                                <List.List bulletted>
+                                                                <List.List>
                                                                     {equip.from.map(
-                                                                        (choice: any) => (
-                                                                            <List.Item>
+                                                                        (choice: any, i: number) => (
+                                                                            <List.Item key={i}>
                                                                                 {choice.equipment?.name ?? JSON.stringify(choice)}
                                                                             </List.Item>
                                                                         )
