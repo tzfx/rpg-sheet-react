@@ -1,6 +1,7 @@
 import { Class, Race } from 'fivee';
 import React from 'react';
 import { Container } from 'semantic-ui-react';
+import { Abilities } from '../Abilities';
 import { AbilityScoreRoller } from './AbilityScoreRoller';
 import { BuilderSteps } from './BuilderSteps';
 import { ClassChooser } from './ClassChooser';
@@ -12,6 +13,7 @@ type State = {
     step: number;
     race?: Race;
     clazz?: Class;
+    abilities?: Abilities;
     equipment?: [];
 };
 
@@ -38,9 +40,16 @@ export class CharacterBuilder extends React.Component<Props, State> {
                         this.setState({ clazz, step: this.state.step + 1 });
                     }}
                 ></ClassChooser>
-            ) : this.state.step === 2  ? (
-                <AbilityScoreRoller></AbilityScoreRoller>
-            ) : ("")}
+            ) : this.state.step === 2 ? (
+                <AbilityScoreRoller
+                    race={this.state.race as any}
+                    selected$={(abilities) => {
+                        this.setState({ abilities, step: this.state.step + 1 });
+                    }}
+                ></AbilityScoreRoller>
+            ) : (
+                ''
+            )}
         </Container>
     );
 }
